@@ -18,7 +18,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:11434',
+        // 可用 VITE_PROXY_TARGET 指向部署好的后端, 默认本地
+        target: process.env.VITE_PROXY_TARGET ?? 'http://127.0.0.1:11434',
         changeOrigin: true,
       },
     },
