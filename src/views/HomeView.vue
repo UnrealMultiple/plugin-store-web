@@ -1,12 +1,20 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
-import { searchPlugins } from '@/api'
+import { searchPlugins, type SortKey } from '@/api'
 import type { PluginInfo } from '@/plugin'
 import PluginCard from '@/components/PluginCard.vue'
 
 const PAGE_SIZE = 12
 
+const SORTS: { key: SortKey; label: string }[] = [
+  { key: 'download', label: '下载最多' },
+  { key: 'rating', label: '评分最高' },
+  { key: 'newest', label: '最新收录' },
+  { key: 'name', label: '名称' },
+]
+
 const keyword = ref('')
+const sort = ref<SortKey>('download')
 const page = ref(1)
 const total = ref(0)
 const plugins = ref<PluginInfo[]>([])
@@ -21,6 +29,7 @@ async function load() {
   try {
     const data = await searchPlugins({
       keyword: keyword.value || undefined,
+      sort: sort.value,
       page: page.value,
       page_size: PAGE_SIZE,
     })
@@ -44,6 +53,11 @@ watch(keyword, () => {
 
 watch(page, load)
 
+watch(sort, () => {
+  page.value = 1
+  load()
+})
+
 onMounted(load)
 </script>
 
@@ -61,6 +75,16 @@ onMounted(load)
   </section>
 
   <section class="container list-area">
+    <div class="sort-bar">
+      <button
+        v-for="s in SORTS"
+        :key="s.key"
+        class="sort-pill"
+        :class="{ active: sort === s.key }"
+        @click="sort = s.key"
+      >{{ s.label }}</button>
+    </div>
+
     <p v-if="error" class="error">加载失败: {{ error }}</p>
     <p v-else-if="loading && plugins.length === 0" class="hint">加载中...</p>
     <p v-else-if="plugins.length === 0" class="hint">没有找到插件捏~</p>
@@ -135,8 +159,37 @@ onMounted(load)
 }
 
 .list-area {
-  padding-top: 1.8rem;
+  padding-top: 1.4rem;
   padding-bottom: 2.5rem;
+}
+
+.sort-bar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.1rem;
+}
+
+.sort-pill {
+  padding: 0.32rem 0.95rem;
+  border: 1px solid var(--color-border);
+  border-radius: 99px;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.sort-pill:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.sort-pill.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
 }
 
 .grid {

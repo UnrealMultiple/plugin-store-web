@@ -13,10 +13,13 @@ function unwrap<T>(resp: ApiResp<T>): T {
   return resp.data as T
 }
 
+export type SortKey = 'download' | 'rating' | 'newest' | 'name'
+
 export interface SearchParams {
   keyword?: string
   page?: number
   page_size?: number
+  sort?: SortKey
 }
 
 export async function searchPlugins(params: SearchParams = {}): Promise<PluginListData> {
