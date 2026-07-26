@@ -35,7 +35,7 @@ jobs:
       - name: Build
         env:
           # 可在仓库 Settings -> Variables 里配置 VITE_API_BASE 覆盖默认后端地址
-          VITE_API_BASE: ${{ vars.VITE_API_BASE || 'http://api.terraria.ink:11434' }}
+          VITE_API_BASE: ${{ vars.VITE_API_BASE || 'https://api.terraria.ink/apm' }}
         run: pnpm build
 
       - name: SPA fallback (404.html)
