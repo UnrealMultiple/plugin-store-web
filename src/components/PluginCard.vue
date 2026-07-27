@@ -14,8 +14,14 @@ defineProps<{
       <div class="title-block">
         <RouterLink class="name" :to="`/plugin/${plugin.id}`">{{ plugin.name }}</RouterLink>
         <div class="sub">
-          <span class="version">v{{ plugin.version }}</span>
-          <span>⬇ {{ plugin.download_count }}</span>
+          <div class="version">
+            <span class="material-symbols-outlined">shoppingmode</span>
+            <span>v{{ plugin.version }}</span>
+          </div>
+          <div class="download">
+            <span class="material-symbols-outlined">download</span>
+            <span>{{ plugin.download_count }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -25,8 +31,9 @@ defineProps<{
     <div class="card-foot">
       <RatingStars :score="plugin.rating_score" :count="plugin.rating_count" />
       <div class="actions">
-        <RouterLink class="btn-outline btn-sm" :to="`/plugin/${plugin.id}`">详情</RouterLink>
-        <a class="btn-solid btn-sm" :href="getPluginDownloadLink(plugin.id)">下载</a>
+        <a class="btn-solid btn-sm" :href="getPluginDownloadLink(plugin.id)"
+          ><span class="material-symbols-outlined">download</span>下载</a
+        >
       </div>
     </div>
   </article>
@@ -38,10 +45,9 @@ defineProps<{
   flex-direction: column;
   gap: 0.7rem;
   padding: 1.1rem 1.2rem;
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-border);
   border-radius: var(--radius);
   background: var(--color-background);
-  box-shadow: var(--shadow-card);
   transition:
     box-shadow 0.25s,
     transform 0.25s,
@@ -50,8 +56,6 @@ defineProps<{
 
 .card:hover {
   border-color: var(--color-accent-border);
-  box-shadow: var(--shadow-card-hover);
-  transform: translateY(-2px);
 }
 
 .card-top {
@@ -67,7 +71,7 @@ defineProps<{
 
 .name {
   display: block;
-  font-size: 1.05rem;
+  font-size: 1.4rem;
   font-weight: 650;
   color: var(--color-heading);
   overflow: hidden;
@@ -84,18 +88,34 @@ defineProps<{
   align-items: center;
   gap: 0.7rem;
   margin-top: 0.15rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   opacity: 0.65;
 }
 
 .version {
-  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
   opacity: 1;
+}
+
+.download {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  opacity: 1;
+}
+
+.sub .material-symbols-outlined {
+  font-size: 1rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
 }
 
 .desc {
   flex: 1;
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   line-height: 1.55;
   opacity: 0.8;
   display: -webkit-box;
@@ -110,10 +130,6 @@ defineProps<{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  padding-top: 0.7rem;
-  border-top: 1px dashed var(--color-border);
 }
 
 .actions {

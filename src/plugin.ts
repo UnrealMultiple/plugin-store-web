@@ -18,12 +18,19 @@ export interface PluginInfo {
   created_at: string
   updated_at: string
   assembly_name: string
+  author: string
+  descriptions: Record<string, string>
+  hot_reload: boolean
+  path: string
 }
 
 // 插件版本
 export interface PluginVersionInfo {
   version: string
   created_at: string
+  dependencies: string[]
+  hot_reload: boolean
+  path: string
 }
 
 // 插件详情

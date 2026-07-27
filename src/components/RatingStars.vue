@@ -50,7 +50,7 @@ function onClick(i: number) {
 .rating {
   display: inline-flex;
   align-items: center;
-  gap: 1px;
+  gap: 0.5px;
   line-height: 1;
 }
 
@@ -69,7 +69,7 @@ function onClick(i: number) {
   left: 0;
   top: 0;
   overflow: hidden;
-  color: #f5a623;
+  color: #f89c07;
   pointer-events: none;
 }
 

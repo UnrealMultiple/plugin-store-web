@@ -10,10 +10,12 @@ import { getDownloadAllLink } from '@/api'
         <RouterLink to="/" class="brand">
           <img alt="logo" class="logo" src="@/assets/logo.png" width="26" height="31" />
           <span class="brand-name">插件超市</span>
-          <span class="brand-tag">Terraria 插件下载镜像</span>
+          <span class="brand-tag">TShock 插件下载</span>
         </RouterLink>
 
-        <a class="btn-solid" :href="getDownloadAllLink()">⬇ 下载插件包</a>
+        <a class="btn-solid" :href="getDownloadAllLink()">
+          <span class="material-symbols-outlined">archive</span> 下载插件包</a
+        >
       </div>
     </header>
 
@@ -22,9 +24,8 @@ import { getDownloadAllLink } from '@/api'
     </main>
 
     <footer class="site-footer">
-      <div class="container">
-        <p>此下载镜像由迅猛龙赞助~ · 闽ICP备2024057933号-1</p>
-      </div>
+      <span class="material-symbols-outlined"> local_laundry_service </span
+      >此下载镜像由在打舞萌的迅猛龙赞助 · 闽ICP备2024057933号-1
     </footer>
   </div>
 </template>
@@ -87,9 +88,12 @@ import { getDownloadAllLink } from '@/api'
 }
 
 .site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
   border-top: 1px solid var(--color-border);
   padding: 1.2rem 0;
-  text-align: center;
   font-size: 0.8rem;
   opacity: 0.6;
 }

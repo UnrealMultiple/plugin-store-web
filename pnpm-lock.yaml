@@ -8,9 +8,15 @@ importers:
 
   .:
     dependencies:
+      '@element-plus/icons-vue':
+        specifier: ^2.3.2
+        version: 2.3.2(vue@3.5.40(typescript@6.0.3))
       axios:
         specifier: ^1.18.1
         version: 1.18.1(debug@4.4.3)
+      material-symbols:
+        specifier: ^0.45.9
+        version: 0.45.9
       vue:
         specifier: ^3.5.40
         version: 3.5.40(typescript@6.0.3)
@@ -235,6 +241,11 @@ packages:
   '@babel/types@8.0.4':
     resolution: {integrity: sha512-eY+Yn3dCqTGmyiq2QRU66lA5FL8lqqqvecHt0fF3uHONIa7ToYsaCiWV8lOKqAs0Rb2SjixiKFROngnulPtt2g==}
     engines: {node: ^22.18.0 || >=24.11.0}
+
+  '@element-plus/icons-vue@2.3.2':
+    resolution: {integrity: sha512-OzIuTaIfC8QXEPmJvB4Y4kw34rSXdCJzxcD1kFStBvr8bK6X1zQAYDo0CNMjojnfTqRQCJ0I7prlErcoRiET2A==}
+    peerDependencies:
+      vue: ^3.2.0
 
   '@emnapi/core@1.11.1':
     resolution: {integrity: sha512-RSvbQmHzdKzNsLYa/wHrbc3KN4sYLKAdPZxqiM2HATqv/SBk2/ENSHpvXGaLOMcsAyz0poEGqkmmKYG3OWiJEQ==}
@@ -1382,6 +1393,9 @@ packages:
     resolution: {integrity: sha512-Q/TKtsC5BPm0kGqgBIF9oXAs/xEf2vRKiIB4wCRQTJOQIByZ1d+NnUOotvJOvNpi5RNIgVOMC3pOuaP1ZTDlVg==}
     engines: {node: '>=12'}
 
+  material-symbols@0.45.9:
+    resolution: {integrity: sha512-CuNJwHm/c13L2NDGvap4k90iFBZFoMQrjBU+GHO/9bh9sUOe5tm3WHFPLa3BEWukMw6dAxwu5PvtlfWh3NppYA==}
+
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
@@ -2125,6 +2139,10 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 8.0.0
       '@babel/helper-validator-identifier': 8.0.4
+
+  '@element-plus/icons-vue@2.3.2(vue@3.5.40(typescript@6.0.3))':
+    dependencies:
+      vue: 3.5.40(typescript@6.0.3)
 
   '@emnapi/core@1.11.1':
     dependencies:
@@ -3174,6 +3192,8 @@ snapshots:
   magic-string@0.30.4:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
+
+  material-symbols@0.45.9: {}
 
   math-intrinsics@1.1.0: {}
 

@@ -49,6 +49,18 @@ function fmtDateTime(iso: string): string {
   return new Date(iso).toLocaleString('zh-CN')
 }
 
+/** 按浏览器语言从多语言 descriptions 中取最佳描述，回退到 description 单字段 */
+function pickDesc(descriptions: Record<string, string>, fallback: string): string {
+  if (!descriptions || Object.keys(descriptions).length === 0) return fallback
+  const lang = navigator.language
+  if (descriptions[lang]) return descriptions[lang]
+  const base = lang.split('-')[0]
+  const match = Object.keys(descriptions).find((k) => k.startsWith(base))
+  if (match) return descriptions[match]
+  if (descriptions['en']) return descriptions['en']
+  return Object.values(descriptions)[0] || fallback
+}
+
 watch(() => route.params.id, load)
 onMounted(load)
 </script>
@@ -66,17 +78,24 @@ onMounted(load)
           <h1>{{ detail.plugin.name }}</h1>
           <span class="badge">v{{ detail.plugin.version }}</span>
         </div>
+        <div class="author">@{{ detail.plugin.author }}</div>
 
-        <p class="desc">{{ detail.plugin.description || '暂无描述' }}</p>
+        <p class="desc">
+          {{ pickDesc(detail.plugin.descriptions, detail.plugin.description) || '暂无描述' }}
+        </p>
 
         <div class="head-actions">
-          <a class="btn-solid" :href="getPluginDownloadLink(detail.plugin.id)">⬇ 下载最新版</a>
+          <a class="btn-solid" :href="getPluginDownloadLink(detail.plugin.id)"
+            ><span class="material-symbols-outlined">download</span> 下载</a
+          >
           <a
             class="btn-outline"
             :href="getPluginDocLink(detail.plugin.assembly_name)"
             target="_blank"
             rel="noopener"
-          >📖 文档</a>
+          >
+            <span class="material-symbols-outlined"> file_export </span>文档</a
+          >
         </div>
       </section>
 
@@ -128,6 +147,7 @@ onMounted(load)
             <tr>
               <th>版本</th>
               <th>发布时间</th>
+              <th>依赖</th>
               <th></th>
             </tr>
           </thead>
@@ -136,13 +156,24 @@ onMounted(load)
               <td>
                 <span class="mono">v{{ v.version }}</span>
                 <span v-if="v.version === detail.plugin.version" class="badge badge-sm">最新</span>
+                <span v-if="v.hot_reload" class="badge badge-sm badge-hotreload">热重载</span>
               </td>
               <td>{{ fmtDateTime(v.created_at) }}</td>
+              <td>
+                <span
+                  v-if="v.dependencies && v.dependencies.length > 0"
+                  class="dep-chip"
+                  :title="v.dependencies.join('\n')"
+                  >{{ v.dependencies.length }} 项</span
+                >
+                <span v-else class="dep-none">—</span>
+              </td>
               <td class="td-right">
                 <a
                   class="btn-outline btn-sm"
                   :href="getPluginDownloadLink(detail.plugin.id, v.version)"
-                >下载</a>
+                  >下载</a
+                >
               </td>
             </tr>
           </tbody>
@@ -161,7 +192,7 @@ onMounted(load)
 .back {
   display: inline-block;
   margin-bottom: 1rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .layout {
@@ -179,10 +210,9 @@ onMounted(load)
 
 .panel {
   padding: 1.4rem 1.6rem;
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-border);
   border-radius: var(--radius);
   background: var(--color-background);
-  box-shadow: var(--shadow-card);
 }
 
 .head-line {
@@ -213,6 +243,12 @@ onMounted(load)
   font-size: 0.72rem;
   padding: 0 0.45rem;
   margin-left: 0.4rem;
+}
+
+.badge-hotreload {
+  color: #2e8a3a;
+  border-color: #a3d9a8;
+  background: #edf7ee;
 }
 
 .desc {
@@ -265,9 +301,14 @@ onMounted(load)
   opacity: 0.6;
 }
 
+.author {
+  color: var(--color-accent);
+  font-size: 0.9rem;
+}
+
 /* 信息卡 */
 h2 {
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 650;
   color: var(--color-heading);
   margin-bottom: 0.7rem;
@@ -285,7 +326,7 @@ h2 {
   gap: 1rem;
   padding: 0.55rem 0;
   border-bottom: 1px dashed var(--color-border);
-  font-size: 0.88rem;
+  font-size: 0.9rem;
 }
 
 .info-panel .row:last-child {
@@ -334,6 +375,22 @@ h2 {
 
 .td-right {
   text-align: right;
+}
+
+.dep-chip {
+  display: inline-block;
+  font-size: 0.78rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 99px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent-border);
+  cursor: default;
+  white-space: nowrap;
+}
+
+.dep-none {
+  opacity: 0.35;
 }
 
 .hint,

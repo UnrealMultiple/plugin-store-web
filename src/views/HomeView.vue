@@ -6,11 +6,10 @@ import PluginCard from '@/components/PluginCard.vue'
 
 const PAGE_SIZE = 12
 
-const SORTS: { key: SortKey; label: string }[] = [
-  { key: 'download', label: '下载最多' },
-  { key: 'rating', label: '评分最高' },
-  { key: 'newest', label: '最新收录' },
-  { key: 'name', label: '名称' },
+const SORTS: { key: SortKey; label: string; icon: string }[] = [
+  { key: 'download', label: '下载最多', icon: 'download' },
+  { key: 'rating', label: '评分最高', icon: 'favorite' },
+  { key: 'name', label: '名称', icon: 'match_case' },
 ]
 
 const keyword = ref('')
@@ -67,7 +66,7 @@ onMounted(load)
       <h1>插件超市</h1>
 
       <div class="search-wrap">
-        <span class="search-icon">🔍</span>
+        <span class="material-symbols-outlined search-icon">search</span>
         <input v-model="keyword" class="search" type="search" placeholder="搜索插件名称..." />
       </div>
       <p class="total">已收录 {{ total }} 个插件</p>
@@ -82,7 +81,12 @@ onMounted(load)
         class="sort-pill"
         :class="{ active: sort === s.key }"
         @click="sort = s.key"
-      >{{ s.label }}</button>
+      >
+        <span class="material-symbols-outlined">
+          {{ s.icon }}
+        </span>
+        {{ s.label }}
+      </button>
     </div>
 
     <p v-if="error" class="error">加载失败: {{ error }}</p>
@@ -103,12 +107,8 @@ onMounted(load)
 
 <style scoped>
 .hero {
-  padding: 3.2rem 0 2.6rem;
+  padding: 2rem 0 0;
   text-align: center;
-  background:
-    radial-gradient(ellipse 60% 120% at 50% -20%, var(--color-accent-soft), transparent),
-    var(--color-background-soft);
-  border-bottom: 1px solid var(--color-border);
 }
 
 .hero h1 {
@@ -129,7 +129,8 @@ onMounted(load)
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 0.95rem;
+  font-size: 1.35rem;
+  color: var(--color-text);
   opacity: 0.5;
   pointer-events: none;
 }
@@ -137,24 +138,22 @@ onMounted(load)
 .search {
   width: 100%;
   padding: 0.8rem 1.2rem 0.8rem 2.6rem;
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-border);
   border-radius: 99px;
   background: var(--color-background);
   color: var(--color-text);
   font-size: 1rem;
   outline: none;
-  box-shadow: var(--shadow-card);
   transition: 0.2s;
 }
 
 .search:focus {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px var(--color-accent-soft);
+  border: 2px solid var(--color-accent);
 }
 
 .total {
   margin-top: 0.9rem;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   opacity: 0.6;
 }
 
@@ -171,8 +170,11 @@ onMounted(load)
 }
 
 .sort-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
   padding: 0.32rem 0.95rem;
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-border);
   border-radius: 99px;
   background: var(--color-background);
   color: var(--color-text);
@@ -189,6 +191,7 @@ onMounted(load)
 .sort-pill.active {
   background: var(--color-accent);
   border-color: var(--color-accent);
+  cursor: not-allowed;
   color: #fff;
 }
 
