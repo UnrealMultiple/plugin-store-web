@@ -55,8 +55,8 @@ function pickDesc(descriptions: Record<string, string>, fallback: string): strin
   const lang = navigator.language
   if (descriptions[lang]) return descriptions[lang]
   const base = lang.split('-')[0]
-  const match = Object.keys(descriptions).find((k) => k.startsWith(base))
-  if (match) return descriptions[match]
+  const match = Object.keys(descriptions).find((k) => k.startsWith(base || ''))
+  if (match) return descriptions[match] || ''
   if (descriptions['en']) return descriptions['en']
   return Object.values(descriptions)[0] || fallback
 }
