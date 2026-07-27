@@ -81,9 +81,16 @@ a {
   font-size: 0.7rem;
 }
 
-.btn-sm .material-symbols-outlined {
-  font-size: 1.3rem;
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
+.btn-sm svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* 按钮内 SVG 图标通用尺寸 */
+.btn-solid svg,
+.btn-outline svg {
+  width: 1.5em;
+  height: 1.5em;
+  flex-shrink: 0;
+  vertical-align: middle;
 }

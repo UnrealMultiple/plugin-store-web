@@ -86,7 +86,18 @@ onMounted(load)
 
         <div class="head-actions">
           <a class="btn-solid" :href="getPluginDownloadLink(detail.plugin.id)"
-            ><span class="material-symbols-outlined">download</span> 下载</a
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="currentColor"
+            >
+              <path
+                d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
+              />
+            </svg>
+            下载</a
           >
           <a
             class="btn-outline"
@@ -94,7 +105,18 @@ onMounted(load)
             target="_blank"
             rel="noopener"
           >
-            <span class="material-symbols-outlined"> file_export </span>文档</a
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="currentColor"
+            >
+              <path
+                d="M480-480ZM202-65l-56-57 118-118h-90v-80h226v226h-80v-89L202-65Zm278-15v-80h240v-440H520v-200H240v400h-80v-400q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H480Z"
+              />
+            </svg>
+            文档</a
           >
         </div>
       </section>
@@ -160,13 +182,10 @@ onMounted(load)
               </td>
               <td>{{ fmtDateTime(v.created_at) }}</td>
               <td>
-                <span
-                  v-if="v.dependencies && v.dependencies.length > 0"
-                  class="dep-chip"
-                  :title="v.dependencies.join('\n')"
-                  >{{ v.dependencies.length }} 项</span
-                >
-                <span v-else class="dep-none">—</span>
+                <div v-if="v.dependencies && v.dependencies.length > 0" class="dep-list">
+                  <span v-for="dep in v.dependencies" :key="dep" class="dep-chip">{{ dep }}</span>
+                </div>
+                <span v-else class="dep-chip dep-none">无依赖</span>
               </td>
               <td class="td-right">
                 <a
@@ -375,6 +394,12 @@ h2 {
 
 .td-right {
   text-align: right;
+}
+
+.dep-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
 }
 
 .dep-chip {

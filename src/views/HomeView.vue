@@ -7,9 +7,21 @@ import PluginCard from '@/components/PluginCard.vue'
 const PAGE_SIZE = 12
 
 const SORTS: { key: SortKey; label: string; icon: string }[] = [
-  { key: 'download', label: '下载最多', icon: 'download' },
-  { key: 'rating', label: '评分最高', icon: 'favorite' },
-  { key: 'name', label: '名称', icon: 'match_case' },
+  {
+    key: 'download',
+    label: '下载最多',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>',
+  },
+  {
+    key: 'rating',
+    label: '评分最高',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z"/></svg>',
+  },
+  {
+    key: 'name',
+    label: '名称',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="m131-252 165-440h79l165 440h-76l-39-112H247l-40 112h-76Zm139-176h131l-64-182h-4l-63 182Zm395 186q-51 0-81-27.5T554-342q0-44 34.5-72.5T677-443q23 0 45 4t38 11v-12q0-29-20.5-47T685-505q-23 0-42 9.5T610-468l-47-35q24-29 54.5-43t68.5-14q69 0 103 32.5t34 97.5v178h-63v-37h-4q-14 23-38 35t-53 12Zm12-54q35 0 59.5-24t24.5-56q-14-8-33.5-12.5T689-393q-32 0-50 14t-18 37q0 20 16 33t40 13Z"/></svg>',
+  },
 ]
 
 const keyword = ref('')
@@ -66,7 +78,18 @@ onMounted(load)
       <h1>插件超市</h1>
 
       <div class="search-wrap">
-        <span class="material-symbols-outlined search-icon">search</span>
+        <svg
+          class="search-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 -960 960 960"
+          width="24px"
+          height="24px"
+          fill="currentColor"
+        >
+          <path
+            d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"
+          />
+        </svg>
         <input v-model="keyword" class="search" type="search" placeholder="搜索插件名称..." />
       </div>
       <p class="total">已收录 {{ total }} 个插件</p>
@@ -82,9 +105,7 @@ onMounted(load)
         :class="{ active: sort === s.key }"
         @click="sort = s.key"
       >
-        <span class="material-symbols-outlined">
-          {{ s.icon }}
-        </span>
+        <div v-html="s.icon"></div>
         {{ s.label }}
       </button>
     </div>
@@ -129,7 +150,8 @@ onMounted(load)
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.35rem;
+  width: 1.35rem;
+  height: 1.35rem;
   color: var(--color-text);
   opacity: 0.5;
   pointer-events: none;
@@ -173,7 +195,7 @@ onMounted(load)
   display: flex;
   align-items: center;
   gap: 0.1rem;
-  padding: 0.32rem 0.95rem;
+  padding: 0.4rem 0.95rem;
   border: 2px solid var(--color-border);
   border-radius: 99px;
   background: var(--color-background);
