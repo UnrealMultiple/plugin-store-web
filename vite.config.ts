@@ -18,8 +18,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        // 可用 VITE_PROXY_TARGET 指向部署好的后端, 默认本地
-        target: process.env.VITE_PROXY_TARGET ?? 'http://127.0.0.1:11434',
+        // 可用 VITE_PROXY_TARGET 指向其他后端, 默认线上环境
+        target: process.env.VITE_PROXY_TARGET ?? 'https://api.terraria.ink/apm',
         changeOrigin: true,
       },
     },

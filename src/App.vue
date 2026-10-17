@@ -9,7 +9,7 @@ import { getDownloadAllLink } from '@/api'
       <div class="container header-inner">
         <RouterLink to="/" class="brand">
           <img alt="logo" class="logo" src="@/assets/logo.png" width="26" height="31" />
-          <span class="brand-name">插件超市</span>
+          <span class="brand-name">插件商店</span>
           <span class="brand-tag">TShock 插件下载</span>
         </RouterLink>
 

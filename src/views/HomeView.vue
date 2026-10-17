@@ -75,7 +75,7 @@ onMounted(load)
 <template>
   <section class="hero">
     <div class="container">
-      <h1>插件超市</h1>
+      <h1>插件商店</h1>
 
       <div class="search-wrap">
         <svg

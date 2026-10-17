@@ -164,39 +164,43 @@ onMounted(load)
 
       <section class="panel">
         <h2>历史版本</h2>
-        <table class="versions">
-          <thead>
-            <tr>
-              <th>版本</th>
-              <th>发布时间</th>
-              <th>依赖</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="v in detail.versions" :key="v.version">
-              <td>
-                <span class="mono">v{{ v.version }}</span>
-                <span v-if="v.version === detail.plugin.version" class="badge badge-sm">最新</span>
-                <span v-if="v.hot_reload" class="badge badge-sm badge-hotreload">热重载</span>
-              </td>
-              <td>{{ fmtDateTime(v.created_at) }}</td>
-              <td>
-                <div v-if="v.dependencies && v.dependencies.length > 0" class="dep-list">
-                  <span v-for="dep in v.dependencies" :key="dep" class="dep-chip">{{ dep }}</span>
-                </div>
-                <span v-else class="dep-chip dep-none">无依赖</span>
-              </td>
-              <td class="td-right">
-                <a
-                  class="btn-outline btn-sm"
-                  :href="getPluginDownloadLink(detail.plugin.id, v.version)"
-                  >下载</a
-                >
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="versions-wrap">
+          <table class="versions">
+            <thead>
+              <tr>
+                <th>版本</th>
+                <th>发布时间</th>
+                <th>依赖</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="v in detail.versions" :key="v.version">
+                <td>
+                  <span class="mono">v{{ v.version }}</span>
+                  <span v-if="v.version === detail.plugin.version" class="badge badge-sm"
+                    >最新</span
+                  >
+                  <span v-if="v.hot_reload" class="badge badge-sm badge-hotreload">热重载</span>
+                </td>
+                <td>{{ fmtDateTime(v.created_at) }}</td>
+                <td>
+                  <div v-if="v.dependencies && v.dependencies.length > 0" class="dep-list">
+                    <span v-for="dep in v.dependencies" :key="dep" class="dep-chip">{{ dep }}</span>
+                  </div>
+                  <span v-else class="dep-chip dep-none">无依赖</span>
+                </td>
+                <td class="td-right">
+                  <a
+                    class="btn-outline btn-sm"
+                    :href="getPluginDownloadLink(detail.plugin.id, v.version)"
+                    >下载</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
     </div>
   </div>
@@ -321,6 +325,7 @@ onMounted(load)
 }
 
 .author {
+  margin-top: 0.55rem;
   color: var(--color-accent);
   font-size: 0.9rem;
 }
@@ -370,8 +375,15 @@ h2 {
 }
 
 /* 版本表 */
+.versions-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .versions {
   width: 100%;
+  min-width: 560px;
   border-collapse: collapse;
   font-size: 0.9rem;
 }
@@ -433,6 +445,10 @@ h2 {
 @media (max-width: 720px) {
   .duo {
     grid-template-columns: 1fr;
+  }
+
+  .panel {
+    padding: 1.1rem 1.1rem;
   }
 }
 </style>
